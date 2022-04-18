@@ -3,7 +3,7 @@ package main
 import "testing"
 
 func TestOver(t *testing.T) {
-	var score int
+	var score int 
 	var over bool
 	score, over = Over(&notOver)
 	if score != 0 {

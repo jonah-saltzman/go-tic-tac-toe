@@ -1,0 +1,8 @@
+initial:
+    board 0:
+        depth 8:  0.5s  moves: 2,722,576
+        depth 9:  2.5s  moves: 15,583,562
+        depth 10: 4.5s  moves: 27,482,673
+        depth 11: 19s   moves: 122,672,105
+        depth 12: 34s   moves: 213,076,289
+        depth 13: 115s  moves: 754,935,173

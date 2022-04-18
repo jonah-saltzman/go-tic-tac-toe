@@ -1,6 +1,6 @@
 package main
 
-func GenMoves(b *board, player uint, c *Counter) []Move {
+func GenMoves(b *board, player uint, c *Counter) Moves {
 	var moves = []Move{}
 	for i := range b {
 		if b[i] == 0 {
