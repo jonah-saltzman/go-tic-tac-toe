@@ -1,9 +1,12 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestOver(t *testing.T) {
-	var score int 
+	var score int
 	var over bool
 	score, over = Over(&notOver)
 	if score != 0 {
@@ -52,6 +55,13 @@ func TestOver(t *testing.T) {
 	if !over {
 		t.Errorf("oFullWin should be over")
 	}
+	boards := ReadBoards()
+	overs := overMap(boards, Over)
+	for i, v := range overs {
+		if v.score != 0 {
+			t.Errorf(fmt.Sprintf("Over failed on board %v\n", i))
+		}
+	}
 }
 
 func TestEval(t *testing.T) {
@@ -85,6 +95,31 @@ func TestEval(t *testing.T) {
 	if score != Max {
 		t.Errorf("oFullWin score should be 1000")
 	}
+	boards := ReadBoards()
+	evals := evalMap(boards, Eval)
+	for i, v := range evals {
+		if v != 0 {
+			t.Errorf(fmt.Sprintf("Eval failed on board %v\n", i))
+		}
+	}
+}
+
+func evalMap(boards []board, f func(b *board) int) []int {
+	vsm := make([]int, len(boards))
+	for i, v := range boards {
+		vsm[i] = f(&v)
+	}
+	return vsm
+}
+
+func overMap(boards []board, f func(b *board) (int, bool)) []Result {
+	vsm := make([]Result, len(boards))
+	for i, v := range boards {
+		score, over := f(&v)
+		r := Result{score: score, over: over}
+		vsm[i] = r
+	}
+	return vsm
 }
 
 func BenchmarkOver(b *testing.B) {

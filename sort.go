@@ -19,6 +19,10 @@ func (a Moves) Swap(i, j int) {
 
 func (a Moves) Less(i, j int) bool {
 	iScore, jScore := Eval(a[i].board), Eval(a[j].board)
-	//fmt.Printf("i: %v; j: %v\n", iScore, jScore)
+	// fmt.Println("=====================")
+	// a[i].print()
+	// fmt.Printf("iScore: %v\n\n", iScore)
+	// a[j].print()
+	// fmt.Printf("jScore: %v\n\n", jScore)
 	return iScore > jScore
 }

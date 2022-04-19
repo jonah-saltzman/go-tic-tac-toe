@@ -1,0 +1,7 @@
+board 0 - pick 10
+board 1 - ?
+board 2 - pick 22
+board 3 - pick 14
+board 4 - pick 12
+board 5 - pick 12
+board 6 - sort test

@@ -19,9 +19,18 @@ type Move struct {
 	to    int
 }
 
-func (m *Move) print() {
+type Result struct {
+	over  bool
+	score int
+}
+
+func (m *Move) print() string {
 	b := m.board
-	fmt.Printf("[\n%s%s%s%s%s]\n\n", pl(b[0:5]), pl(b[5:10]), pl(b[10:15]), pl(b[15:20]), pl(b[20:25]))
+	return fmt.Sprintf("[\n%s%s%s%s%s]\n", pl(b[0:5]), pl(b[5:10]), pl(b[10:15]), pl(b[15:20]), pl(b[20:25]))
+}
+
+func (b *board) print() string {
+	return fmt.Sprintf("[\n%s%s%s%s%s]\n\n", pl(b[0:5]), pl(b[5:10]), pl(b[10:15]), pl(b[15:20]), pl(b[20:25]))
 }
 
 func pl(line []uint) string {

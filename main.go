@@ -9,7 +9,10 @@ import (
 
 func main() {
 	boards := ReadBoards()
-	board := boards[0]
+	Driver(boards[0], 8)
+}
+
+func Driver(board board, maxDepth int) int {
 	var scores = []Score{}
 	alpha := -Max * 10
 	beta := Max * 10
@@ -18,25 +21,25 @@ func main() {
 	SortMoves(&initialMoves)
 	for _, move := range initialMoves {
 		score := Score{to: move.to}
-		score.score = alphabeta(*move.board, 0, alpha, beta, false, &c)
+		score.score = alphabeta(*move.board, 0, alpha, beta, false, &c, maxDepth)
 		//alpha = MinInt(alpha, score.score)
 		scores = append(scores, score)
 	}
 	var bestScore Score
 	bestScore.score = -Max
 	for _, score := range scores {
-		fmt.Printf("Move to %d: score = %d\n", score.to, score.score)
 		if score.score > bestScore.score {
 			bestScore = score
 		}
 	}
 	fmt.Printf("Best move to: %v, score = %v\n", bestScore.to, bestScore.score)
 	fmt.Printf("Total moves: %d\n", c.count)
+	return bestScore.to
 }
 
-func alphabeta(b board, depth int, alpha int, beta int, isMax bool, c *Counter) int {
+func alphabeta(b board, depth int, alpha int, beta int, isMax bool, c *Counter, D int) int {
 	score, over := Over(&b)
-	if over || depth >= 10 {
+	if over || depth >= D {
 		if score > 0 {
 			return score - depth
 		} else if score < 0 {
@@ -57,7 +60,7 @@ func alphabeta(b board, depth int, alpha int, beta int, isMax bool, c *Counter) 
 			if b[i] == 0 {
 				c.inc()
 				b[i] = player
-				best = MaxInt(best, alphabeta(b, depth+1, alpha, best, false, c))
+				best = MaxInt(best, alphabeta(b, depth+1, alpha, best, false, c, D))
 				b[i] = 0
 				alpha = MaxInt(alpha, best)
 				if best >= beta {
@@ -72,7 +75,7 @@ func alphabeta(b board, depth int, alpha int, beta int, isMax bool, c *Counter) 
 			if b[i] == 0 {
 				c.inc()
 				b[i] = player
-				best = MinInt(best, alphabeta(b, depth+1, alpha, beta, true, c))
+				best = MinInt(best, alphabeta(b, depth+1, alpha, beta, true, c, D))
 				b[i] = 0
 				beta = MinInt(beta, best)
 				if best <= alpha {
